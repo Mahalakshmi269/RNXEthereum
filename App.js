@@ -6,107 +6,97 @@
  * @flow strict-local
  */
 
-import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
-
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-export default App;
+ import React, {useState} from 'react';
+ import type {Node} from 'react';
+ import {
+   SafeAreaView,
+   StyleSheet,
+   Text,
+   TextInput,
+   View,
+   Button,
+ } from 'react-native';
+ 
+ 
+ const App: () => Node = () => {
+ 
+   const [value, onChangeTrnxValue] = useState(null);
+   const [address, onChangeAdderess] = useState(null);
+ 
+   const checkTextInputValues = () => {
+     if (!value) {
+       alert('Please Enter Trnx Value');
+       return;
+     }
+     if (!address) {
+       alert('Please Enter Address');
+       return;
+     }
+ 
+     alert('Success');
+   };
+ 
+   return (
+     <SafeAreaView style={styles.container}>
+       <Text style={styles.titleText}>React Native X Ethereum</Text>
+       <Text style={styles.descText}>Enter trnx (eth) value</Text>
+       <TextInput
+         style={styles.input}
+         onChangeText={onChangeTrnxValue}
+         value={value}
+         placeholder="Value of trnx"
+         keyboardType="numeric"
+       />
+       <Text style={styles.descText}>Enter Address</Text>
+       <TextInput
+         style={styles.multiLineInput}
+         multiline
+         numberOfLines={2}
+         onChangeText={onChangeAdderess}
+         value={address}
+         placeholder="Address"
+       />
+       <View style={styles.buttonWrapper}>
+         <Button
+           title="Submit"
+           onPress={checkTextInputValues}
+         />
+       </View>
+     </SafeAreaView>
+   );
+ };
+ 
+ const styles = StyleSheet.create({
+   container: {
+     flex: 1,
+     padding: 10,
+   },
+   titleText: {
+     fontSize: 20,
+     fontWeight: "bold",
+     alignSelf: 'center',
+   },
+   descText:{
+     fontSize: 16,
+     margin:10
+   },
+   input: {
+     height: 50,
+     marginHorizontal: 10,
+     borderWidth: 1,
+     padding: 10,
+   },
+   multiLineInput:{
+     marginHorizontal: 10,
+     borderWidth: 1,
+     padding: 10,
+   }, 
+   buttonWrapper: {
+     width: 100,
+     margin: 20,
+     alignSelf: 'center'
+   }
+ });
+ 
+ export default App;
+ 
